@@ -1,0 +1,25 @@
+ <head>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class ="jumbotron">
+    <h1><%= listName %></h1>
+    </div>
+<div class="middle">
+    <div class="mylist">
+    <% for (let i=0; i<listItems.length; i++) { %>
+      <form action="/delete" method="post">
+        <div class="item" style="display: flex; align-items:center">
+          <input type="checkbox" name="checkbox" value='<%=i %>' onchange="this.form.submit();">
+          <p><%= listItems[i] %></p>
+          <input type="hidden" name="thislist" value = "<%= listName%>"></input>
+        </div>
+      </form>
+      <% } %>
+        <form class="item" action="/" method="post">
+          <input type="text" name="newItem" placeholder="Add Item" autocomplete="off" autofocus>
+          <button type="submit" name="list" value="<%= listName %>">+</button>
+        </form>
+    </div>
+    </div>
+  </body>
