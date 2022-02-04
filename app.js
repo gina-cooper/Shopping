@@ -16,7 +16,7 @@ app.get('/', function(req, res) {
     res.render("list", {listName: "Shopping List", listItems:items}) ; //send items array to list.ejs
 });
 
-//add a bulk items route
+//create a bulk route for the get method
 app.get('/bulk', function(req, res) {
     res.render("list", {listName: "Bulk Items", listItems:bulkItems}) ; //send items array to list.ejs
 });
@@ -24,19 +24,18 @@ app.get('/bulk', function(req, res) {
 
 //retrieve data and display it on the screen
 app.post('/', function(req,res){
-    const query = req.query.newItem; //retrieve an item from the querystring
+    const query = req.query.newItem; //retrieves item from the querystring
     console.log(query);
     const item = req.body.newItem; //retrieves the item from the body
-    const list = req.body.list; //retrieve name of the list
-   
-    if(typeof(query)!="undefined") //check to see if it is not blank
+    const list = req.body.list; //retireve the name of the list
+    if(typeof(query)!= "undefined") //check if the querystring is not blank
     {
         items.push(query);
         res.redirect("/");
     }
-    if(typeof(item)!="undefined")
+    if(typeof(item) !="undefined")
     {
-        if(list === "Shopping List") 
+        if(list === "Shopping List")
         {
             items.push(item);
             res.redirect("/");
@@ -46,22 +45,27 @@ app.post('/', function(req,res){
             bulkItems.push(item);
             res.redirect("/bulk");
         }
+  
     }
+   
 });
 
 app.post("/delete", function(req, res){
     const checkedItemId = req.body.checkbox; 
-    const list = req.body.thisList;
+    const list = req.body.thislist; //retrieve the name of the list
+
     if(list === "Shopping List")
     {
-        items.splice(checkedItemId, 1); //delete the checked item from the array
-        res.redirect("/"); //redirects back to home page
+    items.splice(checkedItemId, 1); //delete the checked item from the array
+    res.redirect("/"); //redirects back to home page
     }
     else
     {
         bulkItems.splice(checkedItemId, 1);
         res.redirect("/bulk");
     }
+    
+
 
 });
 
